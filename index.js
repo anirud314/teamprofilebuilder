@@ -13,7 +13,7 @@ const path = require("path");
 const fs = require("fs");
 
 //Rendering
-const out_DIR = path.resolve(__dirname,"output");
+const out_DIR = path.resolve(__dirname,"dist");
 const outPath = path.join(out_DIR, "team.html");
 const render = require("./src/generateHtml.js");
 // Variables
@@ -100,7 +100,12 @@ const eQuestions = [
         validate: response => {
             const checkID = response.match( /^[1-9]\d*$/);
             if(checkID){
-                return true;
+                if (idArr.includes(response)) {
+                    return "This ID is already taken. Please enter a different number.";
+                }
+                else {
+                    return true;
+                }
             }
             else{
                 return "Please enter any number from 1-9";
@@ -157,7 +162,12 @@ const iQuestions = [
         validate: response => {
             const checkID = response.match( /^[1-9]\d*$/);
             if(checkID){
-                return true;
+                if (idArr.includes(response)) {
+                    return "This ID is already taken. Please enter a different number.";
+                }
+                else {
+                    return true;
+                }
             }
             else{
                 return "Please enter any number from 1-9";
@@ -201,7 +211,7 @@ function assignManager(){
         .then(data => {
             const manager = new Manager(data.mName, data.mEmail, data.mId, data.mOffice);
             team.push(manager);
-            //idArr.push(data.mId);
+            idArr.push(data.mId);
             buildTeam();
         });
 }
@@ -216,17 +226,18 @@ function buildTeam(){
                 "Intern",
                 "I don't need anyone else"
             ]
-        },
+        }
     ]).then(optionData => {
-        if(optionData === "Engineer"){
+        console.log("Choice time");
+        if(optionData.employeeType === "Engineer"){
             console.log("Adding Engineer ----");
             addEngineer();
         }
-        else if(optionData === "Intern"){
+        else if(optionData.employeeType === "Intern"){
             console.log("Adding Intern ------");
             addIntern();
         }
-        else if(optionData === "I don't need anyone else"){
+        else if(optionData.employeeType === "I don't need anyone else"){
             if(team.length > 1){
                 console.log("Generating HTML File");
                 generateProfile();
@@ -243,7 +254,7 @@ function addEngineer(){
         .then(eData =>{
             const engineer = new Engineer(eData.eName, eData.eEmail, eData.eId, eData.eGithub);
             team.push(engineer);
-            //idArr.push(eData.eId);
+            idArr.push(eData.eId);
             buildTeam();
         });
 }
@@ -252,7 +263,7 @@ function addIntern(){
     .then(iData =>{
         const intern = new Intern(iData.iName, iData.iEmail, iData.iId, iData.iSchool);
         team.push(intern);
-        //idArr.push(iData.iId);
+        idArr.push(iData.iId);
         buildTeam();
     });
 }
@@ -260,6 +271,7 @@ function generateProfile(){
     if (!fs.existsSync(out_DIR)) {
         fs.mkdirSync(out_DIR)
     }
+    console.log(team);
     fs.writeFileSync(outPath, render(team), "utf-8");
 }
 // Driver
