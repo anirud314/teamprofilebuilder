@@ -1,5 +1,4 @@
 /*This is the test file for engineer using jest to test the engineer class */
-const { expect } = require("@jest/globals");
 const Engineer = require("../lib/Engineer");
 
 //Testing constructor if it can set a value for engineers github
