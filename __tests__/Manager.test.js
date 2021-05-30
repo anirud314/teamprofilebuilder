@@ -1,0 +1,1 @@
+/*This is the test file for Manager using jest to test the Manager class */

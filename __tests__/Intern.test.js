@@ -1,0 +1,1 @@
+/*This is the test file for Intern using jest to test the Intern class */
