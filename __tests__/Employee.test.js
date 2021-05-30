@@ -60,7 +60,7 @@ test("Get id using getEID()", () =>{
     const employee = new Employee("_","_@_",tID);
     expect(employee.getEID()).toBe(tID);
 });
-test("getEType() which return's Type - \"Employee\"", () =>{
+test("getEType() return's Type - \"Employee\"", () =>{
     const tType = "Employee";
     const employee = new Employee("Aniruddha","abc314@gmail.com",1234321);
     expect(employee.getEType()).toBe(tType);
