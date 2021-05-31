@@ -2,27 +2,26 @@
 //Import all dependencies and other necessary components for the driver to run the project
 
 /*All of the classes I built in the lib folder*/
-const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 
 // Dependencies from node modules 
-const inquirer = require("inquirer");
-const path = require("path");
-const fs = require("fs");
+const inquirer = require("inquirer");// import inquirer
+const path = require("path");// import path
+const fs = require("fs");// import fs
 
 //Rendering
-const out_DIR = path.resolve(__dirname,"dist");
-const outPath = path.join(out_DIR, "team.html");
-const render = require("./src/generateHtml.js");
+const out_DIR = path.resolve(__dirname,"dist");// variable to set sending output to dist 
+const outPath = path.join(out_DIR, "team.html");// naming the path to end with team.html
+const render = require("./src/generateHtml.js"); // render function is the generateHTML function from generateHTML.js
 // Variables
-const team = [];
-const idArr = [];
+const team = [];// Team array holds all team members made
+const idArr = [];// used to check that id's are not being reused
 
 // Manager questions
 const mQuestions = [
-    {
+    {//Asks for name
         type: "input",
         name: "mName",
         message: "Who is the Team Manager?",
@@ -35,7 +34,7 @@ const mQuestions = [
             }
         }
     },
-    {
+    {//Asks for ID
         type: "input",
         name: "mId",
         message: "What is the Manager's ID?",
@@ -49,7 +48,7 @@ const mQuestions = [
             } 
         }
     },
-    {
+    {//Asks for email
         type: "input",
         name: "mEmail",
         message: "What is the Manager's email",
@@ -63,7 +62,7 @@ const mQuestions = [
             }
         }
     },
-    {
+    {//Asks for office number
         type: "input",
         name: "mOffice",
         message: "What is the Manager's Office number?",
@@ -80,7 +79,7 @@ const mQuestions = [
 ];
 // Engineer questions
 const eQuestions = [
-    {
+    {//Asks for engineer name
         type: "input",
         name: "eName",
         message: "What is your engineers name?",
@@ -93,7 +92,7 @@ const eQuestions = [
             }
         }
     },
-    {
+    {//Asks for engineer ID
         type: "input",
         name: "eId",
         message: "What is the Engineer's ID?",
@@ -112,7 +111,7 @@ const eQuestions = [
             }
         }
     },
-    {
+    {//Asks for engineer email
         type: "input",
         name: "eEmail",
         message: "What is the Engineer's email",
@@ -126,7 +125,7 @@ const eQuestions = [
             }
         }
     },
-    {
+    {//Asks for engineer github
         type: "input",
         name: "eGithub",
         message: "What is their github username?",
@@ -142,7 +141,7 @@ const eQuestions = [
 ];
 // Intern questions
 const iQuestions = [
-    {
+    {//Asks for intern's name
         type: "input",
         name: "iName",
         message: "What is your intern's name?",
@@ -155,7 +154,7 @@ const iQuestions = [
             }
         }
     },
-    {
+    {// asks for intern's ID
         type: "input",
         name: "iId",
         message: "What is the intern's ID?",
@@ -174,7 +173,7 @@ const iQuestions = [
             }
         }
     },
-    {
+    {// asks for intern's email
         type: "input",
         name: "iEmail",
         message: "What is the intern's email",
@@ -188,7 +187,7 @@ const iQuestions = [
             }
         }
     },
-    {
+    {//asks for intern's school
         type: "input",
         name: "iSchool",
         message: "What is the name of their school?",
@@ -205,14 +204,14 @@ const iQuestions = [
 
 
 // Functions
-function assignManager(){
+function assignManager(){ // uses prompt(mQuestions) to assign data collected to a new manager class
     console.log("Hello, and welcome to TeamProfileGenerator\nAs a manager you can build your team here.");
     inquirer.prompt(mQuestions)
         .then(data => {
-            const manager = new Manager(data.mName, data.mEmail, data.mId, data.mOffice);
-            team.push(manager);
-            idArr.push(data.mId);
-            buildTeam();
+            const manager = new Manager(data.mName, data.mEmail, data.mId, data.mOffice);// create manager based off of manager class and data collected
+            team.push(manager);// push into team array
+            idArr.push(data.mId);// push into idArr
+            buildTeam();//call build team function
         });
 }
 function buildTeam(){
@@ -249,7 +248,7 @@ function buildTeam(){
         }
     });
 }
-function addEngineer(){
+function addEngineer(){ // Function similar/same as assignManager() uses prompt(eQuestions) and uses that data to create engineer
     inquirer.prompt(eQuestions)
         .then(eData =>{
             const engineer = new Engineer(eData.eName, eData.eEmail, eData.eId, eData.eGithub);
@@ -258,7 +257,7 @@ function addEngineer(){
             buildTeam();
         });
 }
-function addIntern(){
+function addIntern(){// Function similar/same as assignManager() uses prompt(iQuestions) and uses that data to create intern
     inquirer.prompt(iQuestions)
     .then(iData =>{
         const intern = new Intern(iData.iName, iData.iEmail, iData.iId, iData.iSchool);
@@ -267,17 +266,17 @@ function addIntern(){
         buildTeam();
     });
 }
-function generateProfile(){
-    if (!fs.existsSync(out_DIR)) {
-        fs.mkdirSync(out_DIR)
+function generateProfile(){ // uses fs to create file
+    if (!fs.existsSync(out_DIR)) {// if directory doesnt exist
+        fs.mkdirSync(out_DIR)// create it
     }
     console.log(team);
-    fs.writeFileSync(outPath, render(team), "utf-8");
+    fs.writeFileSync(outPath, render(team), "utf-8");// write or replace file with the outPath and name with team being rendered by render function
 }
 // Driver
 function init(){
-    assignManager();
+    assignManager();// call assignManager
 };
 
 //Running code
-init();
+init();// call init

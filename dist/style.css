@@ -1,6 +1,10 @@
+/*Style.css for generated html, based on tutor session example*/
+body{
+    background-color: lightblue;
+}
 .team-heading {
-    background-color: #E84855;
-    color: #ffffff;
+    background-color: navy;
+    color: white;
 }
 
 .team-area {
@@ -12,15 +16,14 @@
 .profile {
     margin: 1em;
     max-width: 280px;
+    padding: 20px;
     width: 90%;
     min-height: 22rem;
-    background-color: #007bff;
+    background-color: navy;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 4px 4px 8px rgba(0,0,0,0.7);
-    border: none;
 }
 
 .profile-details {
@@ -30,7 +33,7 @@
     background-color: #F6F7F8;
 }
 
-.list-group-item {
-    color: #000000;
+.bio-item {
+    color: navy;
     text-decoration: none;
 }
